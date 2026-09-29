@@ -24,6 +24,27 @@ API docs at <http://localhost:8000/api/docs>.
 
 Seeding writes ~100k posts and ~500k comments. Expect a few minutes.
 
+## Running with Docker
+
+Start the application and PostgreSQL 16 with:
+
+```sh
+docker compose up --build
+```
+
+The app waits for PostgreSQL, creates the configured database if needed, applies
+migrations, seeds data if the database is empty, and starts Django on
+<http://localhost:8000>. PostgreSQL is available on port `5432` with database
+`backend_devops_interview` and credentials `postgres`/`postgres`. Data is kept in
+the `postgres_data` volume between restarts.
+
+If port `5432` is already in use on your machine, start Compose with
+`DATABASE_PUBLISHED_PORT=5433 docker compose up --build`; the app still connects
+to PostgreSQL on the internal port `5432`.
+
+To stop the services, press Ctrl-C. To remove the database volume as well, run
+`docker compose down -v`.
+
 ## What the API does
 
 | Method | Path | Description |
